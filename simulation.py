@@ -34,9 +34,8 @@ for t in range(nsim + 1):
     else:
         u_opt = mpc_controller_scipy_minimize(s.ny, s.nu, s.T, s.n, s.p, s.m, s.umax, s.umin, s.ymax, s.ymin, s.dumax, s.q,
                                               s.r, u0temp, y0temp, Gmstep)
-        # Update Usim with u_opt
-        for i in range(Usim.shape[0]):
-            Usim[i, t:] = u_opt[i]
+        # Update Usim from t to the end with u_opt
+        Usim[:, t:] = u_opt.reshape(-1, 1)
         # Simulate
         Ysim, delta_U = simulateMIMO(Gpstep, tsim, s.ny, s.nu, s.y0, s.u0, Usim)
         # Update Y0 and U0 for the next step
