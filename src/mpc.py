@@ -29,21 +29,24 @@ def calculate_step_responses(Gm, nsim, T, fig_name, plot_max_lenght=500):
             Gstep[j][i] = y_out
 
     # Plot step responses
-    PLOT_MAX_LENGHT = plot_max_lenght
+    plot_step_responses(Gstep, nsim, T, plot_max_lenght, fig_name)
+
+    return Gstep
+
+def plot_step_responses(Gstep, nsim, T, plot_max_length, fig_name):
+    tstep = np.linspace(0, nsim * T, nsim + 1)
     nrows = len(Gstep)
     ncols = len(Gstep[0])
     fig, axs = plt.subplots(nrows, ncols, figsize=(15, 15))
     fig.suptitle('step_responses')
     for j, row in enumerate(Gstep):
         for i, y_out in enumerate(row):
-            axs[j, i].plot(tstep[:PLOT_MAX_LENGHT], y_out[:PLOT_MAX_LENGHT])
+            axs[j, i].plot(tstep[:plot_max_length], y_out[:plot_max_length])
             axs[j, i].set_title(f'Gstep[{j}][{i}]')
             axs[j, i].grid(True)
     for ax in axs.flat:
         ax.set(xlabel='Time', ylabel='Step Response')
     plt.savefig(f'figures/{fig_name}.png')
-
-    return Gstep
 
 def plot_simulation_results(Ysim, U, tsim, fig_name, ymin=None, ymax=None, umin=None, umax=None):
     # Plot simulation results
@@ -175,7 +178,7 @@ def mpc_controller_scipy_minimize(ny, nu, T, n, p, m, umax, umin, ymax, ymin, du
         U_ = np.hstack((u0_, U_))
         du_ = np.diff(U_, axis=1)
         dumax_reshaped = np.tile(dumax, (m, 1)).T
-        dumax_constraint = dumax_reshaped - np.abs(du_)        
+        dumax_constraint = dumax_reshaped - np.abs(du_)
         return dumax_constraint.flatten()  # g(x) > =0
 
     constraints = [{'type': 'ineq', 'fun': dumax_constraint}]

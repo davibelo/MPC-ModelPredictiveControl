@@ -12,6 +12,9 @@ df.columns = ['TBOTTOM', 'QREFLUX', 'C2LPG', 'C5LPG']
 print('test data:')
 print(df)
 
+for column in df.columns:
+    print(f'First value of {column}: {df[column].iloc[0]}')
+
 # Split the data into input and output DataFrames
 df_u = df.iloc[:, :NUMBER_OF_INPUTS]
 df_y = df.iloc[:, NUMBER_OF_INPUTS:]
