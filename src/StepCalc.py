@@ -32,7 +32,7 @@ def get_unit_step_responses(df_u, df_y, step_count, response_size):
             step_responses.reset_index(drop=True, inplace=True)
 
             # Rename the columns of the response DataFrame
-            step_responses.columns = [f"{column} x {col}" for col in step_responses.columns]
+            step_responses.columns = [f"{col} x {column}" for col in step_responses.columns]
 
             # Divide each value in the response column by the amplitude of the step
             step_responses = step_responses / step_amplitude
