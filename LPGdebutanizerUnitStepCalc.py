@@ -38,7 +38,7 @@ df_y = df.iloc[:, NUM_U:]
 RESPONSE_SIZE = 60
 
 # Call the function to calculate responses
-df_responses1 = calculate_responses(df_u, df_y, 1, RESPONSE_SIZE)
+df_responses1 = get_unit_step_responses(df_u, df_y, 1, RESPONSE_SIZE)
 
 # Compute the maximum absolute value of each column in df_responses
 max_abs_values = df_responses1.abs().max()
@@ -75,7 +75,7 @@ plt.savefig(f'figures/{FIG_NAME}.png')
 RESPONSE_SIZE = 60
 
 # Call the function to calculate responses
-df_responses2 = calculate_responses(df_u, df_y, 2, RESPONSE_SIZE)
+df_responses2 = get_unit_step_responses(df_u, df_y, 2, RESPONSE_SIZE)
 
 # Compute the maximum absolute value of each column in df_responses
 max_abs_values = df_responses2.abs().max()

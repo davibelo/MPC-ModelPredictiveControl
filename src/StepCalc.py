@@ -1,6 +1,6 @@
 import pandas as pd
 
-def calculate_responses(df_u, df_y, step_count, response_size):
+def get_unit_step_responses(df_u, df_y, step_count, response_size):
     df_responses = pd.DataFrame()
 
     # Iterate over the columns of df_u
