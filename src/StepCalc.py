@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def get_unit_step_responses(df_u, df_y, step_count, response_size):
     df_responses = pd.DataFrame()
@@ -43,3 +44,24 @@ def get_unit_step_responses(df_u, df_y, step_count, response_size):
             df_responses = pd.concat([df_responses, step_responses], axis=1)
 
     return df_responses
+
+def plot_and_save(dataframe, figsize, xticks_increment, y_num_bins, fig_name):
+    # Number of columns to plot
+    num_columns = len(dataframe.columns)
+
+    # Creating subplots
+    fig, axs = plt.subplots(num_columns, 1, figsize=figsize)
+
+    # Plotting each column on a separate subplot
+    for i, column in enumerate(dataframe.columns):
+        axs[i].plot(dataframe.index, dataframe[column])
+        axs[i].set_title(column)
+        axs[i].set_xlabel('Index')
+        axs[i].set_ylabel('Values')
+        axs[i].set_xticks(range(0, len(dataframe.index), xticks_increment))
+        axs[i].tick_params(axis='x', rotation=90)  # Rotate x-axis labels by 90 degrees
+        axs[i].grid(True)  # Add gridlines
+        axs[i].locator_params(axis='y', nbins=y_num_bins)
+
+    plt.tight_layout()  # Adjust layout to not overlap subplots
+    plt.savefig(f'figures/{fig_name}.png')
