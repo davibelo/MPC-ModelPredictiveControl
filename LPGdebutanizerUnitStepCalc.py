@@ -36,3 +36,10 @@ plot_and_save(dataframe=df_responses2,
               xticks_increment=5,
               y_num_bins=5,
               fig_name='LPGdebutanizerUnitStep2')
+
+plot_and_save(dataframe=df_responses1,
+              dataframe2=df_responses2,
+              figsize=(8, 6),
+              xticks_increment=5,
+              y_num_bins=5,
+              fig_name='LPGdebutanizerUnitSteps')

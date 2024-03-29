@@ -45,7 +45,7 @@ def get_unit_step_responses(df_u, df_y, step_count, response_size):
 
     return df_responses
 
-def plot_and_save(dataframe, figsize, xticks_increment, y_num_bins, fig_name):
+def plot_and_save(dataframe, figsize, xticks_increment, y_num_bins, fig_name, dataframe2=None):
     # Number of columns to plot
     num_columns = len(dataframe.columns)
 
@@ -54,7 +54,7 @@ def plot_and_save(dataframe, figsize, xticks_increment, y_num_bins, fig_name):
 
     # Plotting each column on a separate subplot
     for i, column in enumerate(dataframe.columns):
-        axs[i].plot(dataframe.index, dataframe[column])
+        axs[i].plot(dataframe.index, dataframe[column], label='unit step 1')
         axs[i].set_title(column)
         axs[i].set_xlabel('Index')
         axs[i].set_ylabel('Values')
@@ -63,5 +63,10 @@ def plot_and_save(dataframe, figsize, xticks_increment, y_num_bins, fig_name):
         axs[i].grid(True)  # Add gridlines
         axs[i].locator_params(axis='y', nbins=y_num_bins)
 
+        # If a second DataFrame is provided, plot it on the same subplot
+        if dataframe2 is not None:
+            axs[i].plot(dataframe2.index, dataframe2[column], label='unit step 2')
+
     plt.tight_layout()  # Adjust layout to not overlap subplots
+    axs[-1].legend(loc='upper center', bbox_to_anchor=(0.5, -0.5), framealpha=0.25)
     plt.savefig(f'figures/{fig_name}.png')
