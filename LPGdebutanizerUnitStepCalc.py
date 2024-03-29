@@ -15,13 +15,12 @@ print(df)
 df_u = df.iloc[:, :NUMBER_OF_INPUTS]
 df_y = df.iloc[:, NUMBER_OF_INPUTS:]
 
-plot_and_save(
-    dataframe1=df,
-    figsize=(10, 10),
-    xticks_increment=25,
-    y_num_bins=5,
-    fig_name='LPGdebutanizerStepTest',
-    label1='step tests')
+plot_and_save(dataframe1=df,
+              figsize=(10, 10),
+              xticks_increment=25,
+              y_num_bins=5,
+              fig_name='LPGdebutanizerStepTest',
+              label1='step tests')
 
 # Get first step responses
 df_responses1 = get_unit_step_responses(df_u, df_y, 1, RESPONSE_SIZE)
@@ -29,12 +28,11 @@ df_responses1 = get_unit_step_responses(df_u, df_y, 1, RESPONSE_SIZE)
 # Get second step responses
 df_responses2 = get_unit_step_responses(df_u, df_y, 2, RESPONSE_SIZE)
 
-plot_and_save(
-    dataframe1=df_responses1,
-    dataframe2=df_responses2,
-    figsize=(8, 6),
-    xticks_increment=5,
-    y_num_bins=5,
-    fig_name='LPGdebutanizerUnitSteps',
-    label1='unit step 1',
-    label2='unit step 2')
+plot_and_save(dataframe1=df_responses1,
+              dataframe2=df_responses2,
+              figsize=(8, 6),
+              xticks_increment=5,
+              y_num_bins=5,
+              fig_name='LPGdebutanizerUnitSteps',
+              label1='unit step 1',
+              label2='unit step 2')
