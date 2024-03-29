@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
+from src.StepCalc import *
 
 # Step 1: Read the CSV file
 df = pd.read_csv('LPGdesbutanizerStepTest.csv', delimiter=";", index_col=0)
@@ -37,44 +37,8 @@ df_y = df.iloc[:, NUM_U:]
 # Constant for response size
 RESPONSE_SIZE = 60
 
-# Initialize an empty DataFrame to store the response
-df_responses1 = pd.DataFrame()
-
-# Iterate over the columns of df_u
-for column in df_u.columns:
-    # Initialize variables to store the step moment and previous u value
-    step_moment = None
-    prev_u = None
-
-    # Iterate over the rows of df_u
-    for index, row in df_u.iterrows():
-        # If the previous u value is not None and the current u value is different from the previous one
-        if prev_u is not None and row[column] != prev_u:
-            step_moment = index  # Set the step moment to the current index
-            step_amplitude1 = row[column] - prev_u  # Calculate the step amplitude
-            break  # Break the loop as we found the step moment
-
-        prev_u = row[column]  # Update the previous u value
-
-    # Ensure that the step moment allows enough data for the response size
-    if step_moment is not None and step_moment + RESPONSE_SIZE <= df_u.index[-1]:
-        # Extract the output response (from the step moment to RESPONSE_SIZE rows after)
-        step_responses1 = df_y.loc[step_moment:step_moment + RESPONSE_SIZE - 1]
-
-        # Reset the index of the response DataFrame
-        step_responses1.reset_index(drop=True, inplace=True)
-
-        # Rename the columns of the response DataFrame
-        step_responses1.columns = [f"{column} x {col}" for col in step_responses1.columns]
-
-        # Divide each value in the response column by the amplitude of the step
-        step_responses1 = step_responses1 / step_amplitude1
-
-        # Subtract all values in the column by the first value
-        step_responses1 = step_responses1 - step_responses1.iloc[0]
-
-        # Concatenate the response DataFrame to the df_responses DataFrame
-        df_responses1 = pd.concat([df_responses1, step_responses1], axis=1)
+# Call the function to calculate responses
+df_responses1 = calculate_responses(df_u, df_y, 1, RESPONSE_SIZE)
 
 # Compute the maximum absolute value of each column in df_responses
 max_abs_values = df_responses1.abs().max()
@@ -110,47 +74,8 @@ plt.savefig(f'figures/{FIG_NAME}.png')
 # Constant for response size
 RESPONSE_SIZE = 60
 
-# Initialize an empty DataFrame to store the response
-df_responses2 = pd.DataFrame()
-
-# Iterate over the columns of df_u
-for column in df_u.columns:
-    # Initialize variables to store the step moment and previous u value
-    step_moment = None
-    prev_u = None
-    step_counter = 0
-
-    # Iterate over the rows of df_u
-    for index, row in df_u.iterrows():
-        # If the previous u value is not None and the current u value is different from the previous one
-        if prev_u is not None and row[column] != prev_u:
-            step_counter += 1  # Increment the step counter
-            if step_counter == 2:  # Check if this is the second step moment
-                step_moment = index  # Set the step moment to the current index
-                step_amplitude2 = row[column] - prev_u  # Calculate the step amplitude
-                break  # Break the loop as we found the second step moment
-
-        prev_u = row[column]  # Update the previous u value
-
-    # Ensure that the step moment allows enough data for the response size
-    if step_moment is not None and step_moment + RESPONSE_SIZE <= df_u.index[-1]:
-        # Extract the output response (from the step moment to RESPONSE_SIZE rows after)
-        step_responses2 = df_y.loc[step_moment:step_moment + RESPONSE_SIZE - 1]
-
-        # Reset the index of the response DataFrame
-        step_responses2.reset_index(drop=True, inplace=True)
-
-        # Rename the columns of the response DataFrame
-        step_responses2.columns = [f"{column} x {col}" for col in step_responses2.columns]
-
-        # Divide each value in the response column by the amplitude of the step
-        step_responses2 = step_responses2 / step_amplitude2
-
-        # Subtract all values in the column by the first value
-        step_responses2 = step_responses2 - step_responses2.iloc[0]
-
-        # Concatenate the response DataFrame to the df_responses DataFrame
-        df_responses2 = pd.concat([df_responses2, step_responses2], axis=1)
+# Call the function to calculate responses
+df_responses2 = calculate_responses(df_u, df_y, 2, RESPONSE_SIZE)
 
 # Compute the maximum absolute value of each column in df_responses
 max_abs_values = df_responses2.abs().max()
@@ -170,7 +95,7 @@ fig, axs = plt.subplots(num_columns, 1, figsize=(8, 6))  # Adjust figsize as nee
 
 # Plotting each column on a separate subplot
 for i, column in enumerate(df_responses2.columns):
-    axs[i].plot(step_responses2.index, df_responses2[column])
+    axs[i].plot(df_responses2.index, df_responses2[column])
     axs[i].set_title(column)
     axs[i].set_xlabel('Index')
     axs[i].set_ylabel('Values')
