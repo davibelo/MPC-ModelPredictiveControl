@@ -68,5 +68,6 @@ def plot_and_save(dataframe, figsize, xticks_increment, y_num_bins, fig_name, da
             axs[i].plot(dataframe2.index, dataframe2[column], label='unit step 2')
 
     plt.tight_layout()  # Adjust layout to not overlap subplots
-    axs[-1].legend(loc='upper center', bbox_to_anchor=(0.5, -0.5), framealpha=0.25)
+    fig.subplots_adjust(bottom=0.2)  # Adjust the space at the bottom of the figure
+    axs[-1].legend(loc='upper right', bbox_to_anchor=(1, -1), framealpha=0.25)
     plt.savefig(f'figures/{fig_name}.png')
