@@ -38,7 +38,7 @@ df_y = df.iloc[:, NUM_U:]
 RESPONSE_SIZE = 60
 
 # Initialize an empty DataFrame to store the response
-df_responses = pd.DataFrame()
+df_responses1 = pd.DataFrame()
 
 # Iterate over the columns of df_u
 for column in df_u.columns:
@@ -51,7 +51,7 @@ for column in df_u.columns:
         # If the previous u value is not None and the current u value is different from the previous one
         if prev_u is not None and row[column] != prev_u:
             step_moment = index  # Set the step moment to the current index
-            step_amplitude = row[column] - prev_u  # Calculate the step amplitude
+            step_amplitude1 = row[column] - prev_u  # Calculate the step amplitude
             break  # Break the loop as we found the step moment
 
         prev_u = row[column]  # Update the previous u value
@@ -59,25 +59,25 @@ for column in df_u.columns:
     # Ensure that the step moment allows enough data for the response size
     if step_moment is not None and step_moment + RESPONSE_SIZE <= df_u.index[-1]:
         # Extract the output response (from the step moment to RESPONSE_SIZE rows after)
-        step_responses = df_y.loc[step_moment:step_moment + RESPONSE_SIZE - 1]
+        step_responses1 = df_y.loc[step_moment:step_moment + RESPONSE_SIZE - 1]
 
         # Reset the index of the response DataFrame
-        step_responses.reset_index(drop=True, inplace=True)
+        step_responses1.reset_index(drop=True, inplace=True)
 
         # Rename the columns of the response DataFrame
-        step_responses.columns = [f"{column} x {col}" for col in step_responses.columns]
+        step_responses1.columns = [f"{column} x {col}" for col in step_responses1.columns]
 
         # Divide each value in the response column by the amplitude of the step
-        step_responses = step_responses / step_amplitude
+        step_responses1 = step_responses1 / step_amplitude1
 
         # Subtract all values in the column by the first value
-        step_responses = step_responses - step_responses.iloc[0]
+        step_responses1 = step_responses1 - step_responses1.iloc[0]
 
         # Concatenate the response DataFrame to the df_responses DataFrame
-        df_responses = pd.concat([df_responses, step_responses], axis=1)
+        df_responses1 = pd.concat([df_responses1, step_responses1], axis=1)
 
 # Compute the maximum absolute value of each column in df_responses
-max_abs_values = df_responses.abs().max()
+max_abs_values = df_responses1.abs().max()
 
 # Convert the maximum absolute values to scientific notation with two decimal places
 max_abs_values_scientific = max_abs_values.apply(lambda x: '{:.2e}'.format(x))
@@ -87,18 +87,18 @@ print('max abs values on first unit step responses:')
 print(max_abs_values_scientific)
 
 # Number of columns to plot
-num_columns = len(df_responses.columns)
+num_columns = len(df_responses1.columns)
 
 # Creating subplots
 fig, axs = plt.subplots(num_columns, 1, figsize=(8, 6))  # Adjust figsize as needed
 
 # Plotting each column on a separate subplot
-for i, column in enumerate(df_responses.columns):
-    axs[i].plot(step_responses.index, df_responses[column])
+for i, column in enumerate(df_responses1.columns):
+    axs[i].plot(df_responses1.index, df_responses1[column])
     axs[i].set_title(column)
     axs[i].set_xlabel('Index')
     axs[i].set_ylabel('Values')
-    axs[i].set_xticks(range(0, len(df_responses.index), 5))
+    axs[i].set_xticks(range(0, len(df_responses1.index), 5))
     axs[i].tick_params(axis='x', rotation=90)  # Rotate x-axis labels by 90 degrees
     axs[i].grid(True)  # Add gridlines
 
@@ -111,7 +111,7 @@ plt.savefig(f'figures/{FIG_NAME}.png')
 RESPONSE_SIZE = 60
 
 # Initialize an empty DataFrame to store the response
-df_responses = pd.DataFrame()
+df_responses2 = pd.DataFrame()
 
 # Initialize a counter to track the number of step moments found
 step_counter = 0
@@ -121,7 +121,7 @@ for column in df_u.columns:
     # Initialize variables to store the step moment and previous u value
     step_moment = None
     prev_u = None
-
+    
     # Iterate over the rows of df_u
     for index, row in df_u.iterrows():
         # If the previous u value is not None and the current u value is different from the previous one
@@ -129,7 +129,7 @@ for column in df_u.columns:
             step_counter += 1  # Increment the step counter
             if step_counter == 2:  # Check if this is the second step moment
                 step_moment = index  # Set the step moment to the current index
-                step_amplitude = row[column] - prev_u  # Calculate the step amplitude
+                step_amplitude2 = row[column] - prev_u  # Calculate the step amplitude
                 break  # Break the loop as we found the second step moment
 
         prev_u = row[column]  # Update the previous u value
@@ -137,25 +137,25 @@ for column in df_u.columns:
     # Ensure that the step moment allows enough data for the response size
     if step_moment is not None and step_moment + RESPONSE_SIZE <= df_u.index[-1]:
         # Extract the output response (from the step moment to RESPONSE_SIZE rows after)
-        step_responses = df_y.loc[step_moment:step_moment + RESPONSE_SIZE - 1]
+        step_responses2 = df_y.loc[step_moment:step_moment + RESPONSE_SIZE - 1]
 
         # Reset the index of the response DataFrame
-        step_responses.reset_index(drop=True, inplace=True)
+        step_responses2.reset_index(drop=True, inplace=True)
 
         # Rename the columns of the response DataFrame
-        step_responses.columns = [f"{column} x {col}" for col in step_responses.columns]
+        step_responses2.columns = [f"{column} x {col}" for col in step_responses2.columns]
 
         # Divide each value in the response column by the amplitude of the step
-        step_responses = step_responses / step_amplitude
+        step_responses2 = step_responses2 / step_amplitude2
 
         # Subtract all values in the column by the first value
-        step_responses = step_responses - step_responses.iloc[0]
+        step_responses2 = step_responses2 - step_responses2.iloc[0]
 
         # Concatenate the response DataFrame to the df_responses DataFrame
-        df_responses = pd.concat([df_responses, step_responses], axis=1)
+        df_responses2 = pd.concat([df_responses2, step_responses2], axis=1)
 
 # Compute the maximum absolute value of each column in df_responses
-max_abs_values = df_responses.abs().max()
+max_abs_values = df_responses2.abs().max()
 
 # Convert the maximum absolute values to scientific notation with two decimal places
 max_abs_values_scientific = max_abs_values.apply(lambda x: '{:.2e}'.format(x))
@@ -165,18 +165,18 @@ print('max abs values on second unit step responses:')
 print(max_abs_values_scientific)
 
 # Number of columns to plot
-num_columns = len(df_responses.columns)
+num_columns = len(df_responses2.columns)
 
 # Creating subplots
 fig, axs = plt.subplots(num_columns, 1, figsize=(8, 6))  # Adjust figsize as needed
 
 # Plotting each column on a separate subplot
-for i, column in enumerate(df_responses.columns):
-    axs[i].plot(step_responses.index, df_responses[column])
+for i, column in enumerate(df_responses2.columns):
+    axs[i].plot(step_responses2.index, df_responses2[column])
     axs[i].set_title(column)
     axs[i].set_xlabel('Index')
     axs[i].set_ylabel('Values')
-    axs[i].set_xticks(range(0, len(df_responses.index), 5))
+    axs[i].set_xticks(range(0, len(df_responses2.index), 5))
     axs[i].tick_params(axis='x', rotation=90)  # Rotate x-axis labels by 90 degrees
     axs[i].grid(True)  # Add gridlines
 
