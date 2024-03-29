@@ -40,16 +40,6 @@ RESPONSE_SIZE = 60
 # Call the function to calculate responses
 df_responses1 = get_unit_step_responses(df_u, df_y, 1, RESPONSE_SIZE)
 
-# Compute the maximum absolute value of each column in df_responses
-max_abs_values = df_responses1.abs().max()
-
-# Convert the maximum absolute values to scientific notation with two decimal places
-max_abs_values_scientific = max_abs_values.apply(lambda x: '{:.2e}'.format(x))
-
-# Print the maximum absolute value of each column in scientific notation
-print('max abs values on first unit step responses:')
-print(max_abs_values_scientific)
-
 # Number of columns to plot
 num_columns = len(df_responses1.columns)
 
@@ -76,16 +66,6 @@ RESPONSE_SIZE = 60
 
 # Call the function to calculate responses
 df_responses2 = get_unit_step_responses(df_u, df_y, 2, RESPONSE_SIZE)
-
-# Compute the maximum absolute value of each column in df_responses
-max_abs_values = df_responses2.abs().max()
-
-# Convert the maximum absolute values to scientific notation with two decimal places
-max_abs_values_scientific = max_abs_values.apply(lambda x: '{:.2e}'.format(x))
-
-# Print the maximum absolute value of each column in scientific notation
-print('max abs values on second unit step responses:')
-print(max_abs_values_scientific)
 
 # Number of columns to plot
 num_columns = len(df_responses2.columns)
