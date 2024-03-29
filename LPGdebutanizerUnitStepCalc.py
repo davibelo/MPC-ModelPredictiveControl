@@ -113,15 +113,13 @@ RESPONSE_SIZE = 60
 # Initialize an empty DataFrame to store the response
 df_responses2 = pd.DataFrame()
 
-# Initialize a counter to track the number of step moments found
-step_counter = 0
-
 # Iterate over the columns of df_u
 for column in df_u.columns:
     # Initialize variables to store the step moment and previous u value
     step_moment = None
     prev_u = None
-    
+    step_counter = 0
+
     # Iterate over the rows of df_u
     for index, row in df_u.iterrows():
         # If the previous u value is not None and the current u value is different from the previous one
