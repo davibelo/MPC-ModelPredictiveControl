@@ -4,7 +4,7 @@ from src.StepCalc import *
 import joblib
 
 NUMBER_OF_INPUTS = 2
-RESPONSE_SIZE = 60
+RESPONSE_SIZE = 120
 
 # Step 1: Read the CSV file
 df = pd.read_csv('LPGdesbutanizerStepTest.csv', delimiter=";", index_col=0)
