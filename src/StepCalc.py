@@ -45,27 +45,31 @@ def get_unit_step_responses(df_u, df_y, step_count, response_size):
 
     return df_responses
 
-def plot_and_save(dataframe, figsize, xticks_increment, y_num_bins, fig_name, dataframe2=None):
+def plot_and_save(dataframe1, figsize, xticks_increment, y_num_bins, fig_name, dataframe2=None, dataframe3=None, label1='1', label2='2', label3='3'):
     # Number of columns to plot
-    num_columns = len(dataframe.columns)
+    num_columns = len(dataframe1.columns)
 
     # Creating subplots
     fig, axs = plt.subplots(num_columns, 1, figsize=figsize)
 
     # Plotting each column on a separate subplot
-    for i, column in enumerate(dataframe.columns):
-        axs[i].plot(dataframe.index, dataframe[column], label='unit step 1')
+    for i, column in enumerate(dataframe1.columns):
+        axs[i].plot(dataframe1.index, dataframe1[column], label=label1)
         axs[i].set_title(column)
         axs[i].set_xlabel('Index')
         axs[i].set_ylabel('Values')
-        axs[i].set_xticks(range(0, len(dataframe.index), xticks_increment))
+        axs[i].set_xticks(range(0, len(dataframe1.index), xticks_increment))
         axs[i].tick_params(axis='x', rotation=90)  # Rotate x-axis labels by 90 degrees
         axs[i].grid(True)  # Add gridlines
         axs[i].locator_params(axis='y', nbins=y_num_bins)
 
         # If a second DataFrame is provided, plot it on the same subplot
         if dataframe2 is not None:
-            axs[i].plot(dataframe2.index, dataframe2[column], label='unit step 2')
+            axs[i].plot(dataframe2.index, dataframe2[column], label=label2)
+
+        # If a third DataFrame is provided, plot it on the same subplot
+        if dataframe3 is not None:
+            axs[i].plot(dataframe3.index, dataframe3[column], label=label3)
 
     plt.tight_layout()  # Adjust layout to not overlap subplots
     fig.subplots_adjust(bottom=0.2)  # Adjust the space at the bottom of the figure
