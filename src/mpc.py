@@ -42,7 +42,7 @@ def plot_step_responses(Gstep, nsim, T, plot_max_length, fig_name):
     for j, row in enumerate(Gstep):
         for i, y_out in enumerate(row):
             axs[j, i].plot(tstep[:plot_max_length], y_out[:plot_max_length])
-            axs[j, i].set_title(f'Gstep[{j}][{i}]')
+            axs[j, i].set_title(f'Gstep[{j+1}][{i+1}]')
             axs[j, i].grid(True)
     for ax in axs.flat:
         ax.set(xlabel='Time', ylabel='Step Response')

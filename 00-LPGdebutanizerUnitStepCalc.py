@@ -41,8 +41,8 @@ plot_and_save(dataframe1=df_responses1,
               label1='unit step 1',
               label2='unit step 2')
 
-G11 = df_responses2['C2LPG x TBOTTOM'].to_numpy()
-G21 = df_responses2['C5LPG x TBOTTOM'].to_numpy()
+G11 = df_responses1['C2LPG x TBOTTOM'].to_numpy()
+G21 = df_responses1['C5LPG x TBOTTOM'].to_numpy()
 G12 = df_responses1['C2LPG x QREFLUX'].to_numpy()
 G22 = df_responses1['C5LPG x QREFLUX'].to_numpy()
 
