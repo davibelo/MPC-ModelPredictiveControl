@@ -114,9 +114,6 @@ def simulateMIMO(Gstep, tsim, ny, nu, y0, u0, U):
                     y += delta_U[i, t] * Gstep[j, i, 0]
             Y[j, t] = y
     return Y, delta_U
-#TODO: need to fix the simulation, it has to consider an u0
-# because when passing to optimize U, it can't optimize the initial condition
-
 
 def mpc_controller_scipy_minimize(ny, nu, T, n, p, m, umax, umin, ymax, ymin, dumax, q, r, u0temp,
                                   y0temp, Gstep):
