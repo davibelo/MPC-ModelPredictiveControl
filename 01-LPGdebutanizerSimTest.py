@@ -38,13 +38,13 @@ plot_simulation_results(YsimTest, Utest, tsimTest, 'LPGdebutanizer - test')
 n = 120  # Stabilizing horizon
 p = 120  # Output prediction horizon
 m = 3  # Control horizon
-umax = np.array([190, 15000])
-umin = np.array([150, 5000])
-ymax = np.array([0.01, 0.03])
-ymin = np.array([0.005, 0.005])
-dumax = np.array([0.25, 5])
-q = np.array([100000, 100000])  # Output weights
-r = np.array([10000, 10000])  # Input weights
+umax = np.array([200, 20000])
+umin = np.array([120, 1000])
+ymax = np.array([0.04, 0.03])
+ymin = np.array([0.02, 0.005])
+dumax = np.array([0.1, 1])
+q = np.array([1000000, 1000000])  # Output weights
+r = np.array([100000, 100000])  # Input weights
 
 # Control loop simulation
 tsim = np.linspace(0, nsim * T, nsim + 1)  # Simulation Time vector
@@ -61,6 +61,7 @@ for t in range(nsim + 1):
         Usim[:, t:] = u_opt.reshape(-1, 1)
         # Simulate
         Ysim, delta_U = simulateMIMO(Gpstep, tsim, ny, nu, y0, u0, Usim)
+        print(delta_U[:, t])
         # Update Y0 and U0 for the next step
         y0temp = Ysim[:, t]
         u0temp = Usim[:, t]

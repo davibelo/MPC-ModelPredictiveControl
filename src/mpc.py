@@ -115,6 +115,7 @@ def simulateMIMO(Gstep, tsim, ny, nu, y0, u0, U):
             Y[j, t] = y
     return Y, delta_U
 
+
 def mpc_controller_scipy_minimize(ny, nu, T, n, p, m, umax, umin, ymax, ymin, dumax, q, r, u0temp,
                                   y0temp, Gstep):
     # Define the control objective function
@@ -173,7 +174,7 @@ def mpc_controller_scipy_minimize(ny, nu, T, n, p, m, umax, umin, ymax, ymin, du
         U_ = U_flatted.reshape((nu, m))
         u0_ = u0temp.reshape(-1, 1)
         U_ = np.hstack((u0_, U_))
-        du_ = np.diff(U_, axis=1)
+        du_ = np.diff(U_, axis=1)        
         dumax_reshaped = np.tile(dumax, (m, 1)).T
         dumax_constraint = dumax_reshaped - np.abs(du_)
         return dumax_constraint.flatten()  # g(x) > =0
