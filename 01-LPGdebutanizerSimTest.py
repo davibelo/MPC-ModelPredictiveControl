@@ -23,8 +23,8 @@ plot_step_responses(Gmstep, nsim, T, plot_max_length=120, fig_name='LPGdebutaniz
 # Set Simulation test
 tsimTest = np.linspace(0, nsimTest * T, nsimTest + 1)  # Simulation Time vector
 Utest = np.tile(u0, (len(tsimTest), 1)).T.astype(float)  # Initialisation of the input matrix
-Utest[:, 200:] = np.array([165., 10648.]).reshape(-1, 1)  # Step change in inputs
-Utest[:, 400:] = np.array([165., 10658.]).reshape(-1, 1)  # Step change in inputs
+Utest[:, 200:] = np.array([165.9, 10648.]).reshape(-1, 1)  # Step change in inputs
+Utest[:, 400:] = np.array([165.9, 10658.]).reshape(-1, 1)  # Step change in inputs
 Utest[:, 600:] = np.array([166., 10658.]).reshape(-1, 1)  # Step change in inputs
 Utest[:, 800:] = np.array([166., 10648.]).reshape(-1, 1)  # Step change in inputs
 
