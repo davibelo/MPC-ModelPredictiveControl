@@ -37,6 +37,11 @@ df_responses2 = get_unit_step_responses(df_u, df_y, 2, RESPONSE_SIZE)
 df_responses1.loc[STEADY_STATE_TIME + 1:, :] = df_responses1.loc[STEADY_STATE_TIME, :].values
 df_responses2.loc[STEADY_STATE_TIME + 1:, :] = df_responses2.loc[STEADY_STATE_TIME, :].values
 
+# Extend responses to test mpc simulation (temporary!)
+# RESPONSE_SIZE = 1000
+# df_responses1 = df_responses1.reindex(range(RESPONSE_SIZE), method='ffill')
+# df_responses2 = df_responses2.reindex(range(RESPONSE_SIZE), method='ffill')
+
 plot_and_save(dataframe1=df_responses1,
               dataframe2=df_responses2,
               figsize=(8, 6),

@@ -95,10 +95,15 @@ def simulateMIMO(Gstep, tsim, ny, nu, y0, u0, U):
     - delta_U: The difference between the input at each time step and the previous time step (array with dimensions [nu, len(tsim)]).
     """
     Gstep = np.array(Gstep)
+    # Check if Gstep is not the same length as tsim
     tsim_len = len(tsim)
+    if Gstep.shape[2] != tsim_len:    
+        pad_width = tsim_len - Gstep.shape[2] # Calculate the number of padding elements needed
+        pad_widths = ((0, 0), (0, 0), (0, pad_width)) # Create a tuple defining the padding for each dimension
+        Gstep = np.pad(Gstep, pad_widths, mode='edge') # Extend Gstep to match the length of tsim
     Y = np.zeros((ny, tsim_len), dtype=float)
     delta_U = np.zeros_like(U).astype(float)
-    U = np.array(U, dtype=float) # Ensure U is a numpy float array
+    U = np.array(U, dtype=float)  # Ensure U is a numpy float array
     U = np.hstack((u0[:, np.newaxis], U))  # Add u0 at the beginning of U
     for t in range(tsim_len):
         for j in range(ny):
@@ -125,7 +130,7 @@ def mpc_controller_scipy_minimize(ny, nu, T, n, p, m, umax, umin, ymax, ymin, du
         ''' Control objective function '''
         ny, nu, T, n, p, m, umax, umin, ymax, ymin, dumax, q, r, u0temp, y0temp, Gstep = args
 
-        # Reshape U back to its original shape        
+        # Reshape U back to its original shape
         U = U_flatted.reshape(nu, m)
 
         # Resize U to p dimension padding with the last value

@@ -12,8 +12,8 @@ nsim = 500  # Simulation time in sampling periods
 T = 1  # Sampling time (min)
 ny = 2
 nu = 2
-u0 = np.array([166., 10648.])
-y0 = np.array([0.0139689, 0.0152698])
+u0 = np.array([166., 10648.], dtype=float)
+y0 = np.array([0.0139689, 0.0152698], dtype=float)
 
 #load the step responses
 Gmstep = joblib.load('outputs/Gstep.joblib')
@@ -23,10 +23,10 @@ plot_step_responses(Gmstep, nsim, T, plot_max_length=120, fig_name='LPGdebutaniz
 # Set Simulation test
 tsimTest = np.linspace(0, nsimTest * T, nsimTest + 1)  # Simulation Time vector
 Utest = np.tile(u0, (len(tsimTest), 1)).T.astype(float)  # Initialisation of the input matrix
-Utest[:, 200:] = np.array([165.9, 10648.]).reshape(-1, 1)  # Step change in inputs
-Utest[:, 400:] = np.array([165.9, 10658.]).reshape(-1, 1)  # Step change in inputs
-Utest[:, 600:] = np.array([166., 10658.]).reshape(-1, 1)  # Step change in inputs
-Utest[:, 800:] = np.array([166., 10648.]).reshape(-1, 1)  # Step change in inputs
+Utest[:, 200:] = np.array([165.9, 10648.]).reshape(-1, 1).astype(float)  # Step change in inputs
+Utest[:, 400:] = np.array([165.9, 10658.]).reshape(-1, 1).astype(float)  # Step change in inputs
+Utest[:, 600:] = np.array([166., 10658.]).reshape(-1, 1).astype(float)  # Step change in inputs
+Utest[:, 800:] = np.array([166., 10648.]).reshape(-1, 1).astype(float)  # Step change in inputs
 
 # Simulate the test
 YsimTest, delta_U = simulateMIMO(Gmstep, tsimTest, ny, nu, y0, u0, Utest)
@@ -37,14 +37,14 @@ plot_simulation_results(YsimTest, Utest, tsimTest, 'LPGdebutanizer - test')
 # MPC parameters
 n = 120  # Stabilizing horizon
 p = 120  # Output prediction horizon
-m = 2  # Control horizon
+m = 5  # Control horizon
 umax = np.array([200., 20000.])
 umin = np.array([120., 1000.])
-ymax = np.array([0.02, 0.02])
-ymin = np.array([0.01, 0.01])
-dumax = np.array([0.5, 100.])
+ymax = np.array([0.01, 0.03])
+ymin = np.array([0.005, 0.005])
+dumax = np.array([2, 200.])
 q = np.array([1000., 1000.])  # Output weights
-r = np.array([10., 1.])  # Input weights
+r = np.array([10., 0.0000001])  # Input weights
 
 # Control loop simulation
 tsim = np.linspace(0, nsim * T, nsim + 1)  # Simulation Time vector
