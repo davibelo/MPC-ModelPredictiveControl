@@ -17,32 +17,32 @@ class System1:
         # self.m = 2  # Control horizon 2
 
         # Initial input and output values
-        self.u0 = np.array([700, 6.2, 0])
+        self.u0 = np.array([700., 6.2, 0.])
         # self.y0 = np.array([2.5, 0.7]) # inside the bounds
         # self.y0 = np.array([3,2, 0.7]) # out of bounds 1
         self.y0 = np.array([2.5, 0.5])  # out of bounds 2
         # self.y0 = np.array([3.2, 0.5])  # out of bounds 3
 
         # Input constraints
-        self.umax = np.array([950, 9.0, 1e3])
-        self.umin = np.array([400, 3.0, -1e3])
-        self.dumax = np.array([10, 0.5, 1e-4])
+        self.umax = np.array([950., 9.0, 1e3])
+        self.umin = np.array([400., 3.0, -1e3])
+        self.dumax = np.array([10., 0.5, 1e-4])
 
         # Output constraints
         self.ymax = np.array([2.8, 0.75])
         self.ymin = np.array([2.0, 0.65])
 
         # Weights of the control layer
-        # self.q = np.array([10000, 10000])  # Output weights
-        self.q = np.array([100000, 100000])  # Output weights
-        # self.r = np.array([100, 100, 1])  # Input weights
-        self.r = np.array([10, 10, 1])  # Input weights
+        # self.q = np.array([10000., 10000.])  # Output weights
+        self.q = np.array([100000., 100000.])  # Output weights
+        # self.r = np.array([100., 100., 1.])  # Input weights
+        self.r = np.array([10., 10., 1.])  # Input weights
 
         # Weights of the economic layer
-        self.py = np.array([0, 0])  # Output weights
-        self.pu = np.array([0, 1, 0])  # Input weights
+        self.py = np.array([0., 0.])  # Output weights
+        self.pu = np.array([0., 1., 0.])  # Input weights
         self.peps = np.array([1e5, 1e5])  # Penalty weights
-        self.ru = np.array([1, 1, 0])  # Input optimization weights
+        self.ru = np.array([1., 1., 0.])  # Input optimization weights
 
         # System Transfer functions
         self.G11 = ct.tf([-1.9973e-3, -1.3105e-4], [1, -8.3071e-1, -5.4544e-1, 5.1700e-1, 0],
@@ -65,8 +65,8 @@ class System1:
     def generate_test_input(self, nsimTest):
         tsimTest = np.linspace(0, nsimTest * self.T, nsimTest + 1)  # Simulation Time vector
         Utest = np.tile(self.u0, (len(tsimTest), 1)).T  # Initialisation of the input matrix
-        Utest[:, 100:] = np.array([710, 6.2, 0]).reshape(-1, 1)  # Step change in inputs
-        Utest[:, 500:] = np.array([710, 6.3, 0]).reshape(-1, 1)  # Step change in inputs
-        Utest[:, 1000:] = np.array([710, 6.3, 10]).reshape(-1, 1)  # Step change in inputs
-        Utest[:, 1500:] = np.array([700, 6.2, 0]).reshape(-1, 1)  # Step change in inputs
+        Utest[:, 100:] = np.array([710., 6.2, 0.]).reshape(-1, 1)  # Step change in inputs
+        Utest[:, 500:] = np.array([710., 6.3, 0.]).reshape(-1, 1)  # Step change in inputs
+        Utest[:, 1000:] = np.array([710., 6.3, 10.]).reshape(-1, 1)  # Step change in inputs
+        Utest[:, 1500:] = np.array([700., 6.2, 0.]).reshape(-1, 1)  # Step change in inputs
         return Utest, tsimTest

@@ -73,6 +73,7 @@ def plot_simulation_results(Ysim, U, tsim, fig_name, ymin=None, ymax=None, umin=
         ax.set(ylabel='U')
     plt.savefig(f'figures/{fig_name}.png')
 
+
 def simulateMIMO(Gstep, tsim, ny, nu, y0, u0, U):
     """
     Simulate the MIMO system response y given the step response matrix Gstep, time vector tsim,
@@ -95,8 +96,9 @@ def simulateMIMO(Gstep, tsim, ny, nu, y0, u0, U):
     """
     Gstep = np.array(Gstep)
     tsim_len = len(tsim)
-    Y = np.zeros((ny, tsim_len))
-    delta_U = np.zeros_like(U)
+    Y = np.zeros((ny, tsim_len), dtype=float)
+    delta_U = np.zeros_like(U).astype(float)
+    U = np.array(U, dtype=float) # Ensure U is a numpy float array
     U = np.hstack((u0[:, np.newaxis], U))  # Add u0 at the beginning of U
     for t in range(tsim_len):
         for j in range(ny):
@@ -123,7 +125,7 @@ def mpc_controller_scipy_minimize(ny, nu, T, n, p, m, umax, umin, ymax, ymin, du
         ''' Control objective function '''
         ny, nu, T, n, p, m, umax, umin, ymax, ymin, dumax, q, r, u0temp, y0temp, Gstep = args
 
-        # Reshape U back to its original shape
+        # Reshape U back to its original shape        
         U = U_flatted.reshape(nu, m)
 
         # Resize U to p dimension padding with the last value
@@ -158,7 +160,7 @@ def mpc_controller_scipy_minimize(ny, nu, T, n, p, m, umax, umin, ymax, ymin, du
     start_time = time.time()  # Start timing
 
     # Prepare U to be optimized
-    U = np.tile(u0temp, (m, 1)).T  # initialize with the u0temp
+    U = np.tile(u0temp, (m, 1)).T.astype(float)  # initialize with the u0temp
     U_flatted = U.flatten()  # flatten U
 
     # Define the arguments for the control objective function
@@ -174,7 +176,7 @@ def mpc_controller_scipy_minimize(ny, nu, T, n, p, m, umax, umin, ymax, ymin, du
         U_ = U_flatted.reshape((nu, m))
         u0_ = u0temp.reshape(-1, 1)
         U_ = np.hstack((u0_, U_))
-        du_ = np.diff(U_, axis=1)        
+        du_ = np.diff(U_, axis=1)
         dumax_reshaped = np.tile(dumax, (m, 1)).T
         dumax_constraint = dumax_reshaped - np.abs(du_)
         return dumax_constraint.flatten()  # g(x) > =0

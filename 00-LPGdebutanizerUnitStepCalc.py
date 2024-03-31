@@ -5,6 +5,7 @@ import joblib
 
 NUMBER_OF_INPUTS = 2
 RESPONSE_SIZE = 120
+STEADY_STATE_TIME = 80
 
 # Step 1: Read the CSV file
 df = pd.read_csv('LPGdesbutanizerStepTest.csv', delimiter=";", index_col=0)
@@ -31,6 +32,10 @@ df_responses1 = get_unit_step_responses(df_u, df_y, 1, RESPONSE_SIZE)
 
 # Get second step responses
 df_responses2 = get_unit_step_responses(df_u, df_y, 2, RESPONSE_SIZE)
+
+# Make responses achieve steady state mandatorily
+df_responses1.loc[STEADY_STATE_TIME + 1:, :] = df_responses1.loc[STEADY_STATE_TIME, :].values
+df_responses2.loc[STEADY_STATE_TIME + 1:, :] = df_responses2.loc[STEADY_STATE_TIME, :].values
 
 plot_and_save(dataframe1=df_responses1,
               dataframe2=df_responses2,

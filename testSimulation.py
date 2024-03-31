@@ -25,15 +25,16 @@ plot_simulation_results(YsimTest, Utest, tsimTest, 'plant - test')
 
 # Control loop simulation
 tsim = np.linspace(0, nsim * s1.T, nsim + 1)  # Simulation Time vector
-Ysim = np.tile(s1.y0, (len(tsim), 1)).T # Initialize Y_sim
-Usim = np.tile(s1.u0, (len(tsim), 1)).T  # Initialize U_sim
+Ysim = np.tile(s1.y0, (len(tsim), 1)).T.astype(float) # Initialize Y_sim
+Usim = np.tile(s1.u0, (len(tsim), 1)).T.astype(float)  # Initialize U_sim
 for t in range(nsim + 1):
     if t == 0:
         u0temp = s1.u0
         y0temp = s1.y0
     else:
-        u_opt = mpc_controller_scipy_minimize(s1.ny, s1.nu, s1.T, s1.n, s1.p, s1.m, s1.umax, s1.umin, s1.ymax, s1.ymin, s1.dumax, s1.q,
-                                              s1.r, u0temp, y0temp, Gmstep)
+        u_opt = mpc_controller_scipy_minimize(s1.ny, s1.nu, s1.T, s1.n, s1.p, s1.m, s1.umax,
+                                              s1.umin, s1.ymax, s1.ymin, s1.dumax, s1.q, s1.r,
+                                              u0temp, y0temp, Gmstep)
         # Update Usim from t to the end with u_opt
         Usim[:, t:] = u_opt.reshape(-1, 1)
         # Simulate
@@ -41,5 +42,8 @@ for t in range(nsim + 1):
         # Update Y0 and U0 for the next step
         y0temp = Ysim[:, t]
         u0temp = Usim[:, t]
+    print('y: ', y0temp)
+    print('u: ', u0temp)
+    print('delta_U: ', delta_U[:, t])
     print(f'Step {t} of {nsim} completed')
 plot_simulation_results(Ysim, Usim, tsim, 'plant - control loop', s1.ymin, s1.ymax, s1.umin, s1.umax)
