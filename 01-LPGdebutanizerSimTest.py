@@ -23,9 +23,9 @@ plot_step_responses(Gmstep, nsim, T, plot_max_length=120, fig_name='LPGdebutaniz
 # Set Simulation test
 tsimTest = np.linspace(0, nsimTest * T, nsimTest + 1)  # Simulation Time vector
 Utest = np.tile(u0, (len(tsimTest), 1)).T.astype(float)  # Initialisation of the input matrix
-Utest[:, 200:] = np.array([165.9, 10648.]).reshape(-1, 1).astype(float)  # Step change in inputs
-Utest[:, 400:] = np.array([165.9, 10658.]).reshape(-1, 1).astype(float)  # Step change in inputs
-Utest[:, 600:] = np.array([166., 10658.]).reshape(-1, 1).astype(float)  # Step change in inputs
+Utest[:, 200:] = np.array([167., 10648.]).reshape(-1, 1).astype(float)  # Step change in inputs
+Utest[:, 400:] = np.array([166., 10648.]).reshape(-1, 1).astype(float)  # Step change in inputs
+Utest[:, 600:] = np.array([166., 10748.]).reshape(-1, 1).astype(float)  # Step change in inputs
 Utest[:, 800:] = np.array([166., 10648.]).reshape(-1, 1).astype(float)  # Step change in inputs
 
 # Simulate the test
@@ -42,9 +42,9 @@ umax = np.array([200., 20000.])
 umin = np.array([120., 1000.])
 ymax = np.array([0.02, 0.01])
 ymin = np.array([0.01, 0.005])
-dumax = np.array([2, 200.])
+dumax = np.array([1, 1000.])
 q = np.array([1000., 1000.])  # Output weights
-r = np.array([100., 1])  # Input weights
+r = np.array([100., 0.00001])  # Input weights
 
 # Control loop simulation
 tsim = np.linspace(0, nsim * T, nsim + 1)  # Simulation Time vector
