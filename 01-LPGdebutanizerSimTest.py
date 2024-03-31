@@ -40,11 +40,11 @@ p = 120  # Output prediction horizon
 m = 5  # Control horizon
 umax = np.array([200., 20000.])
 umin = np.array([120., 1000.])
-ymax = np.array([0.01, 0.03])
-ymin = np.array([0.005, 0.005])
+ymax = np.array([0.02, 0.01])
+ymin = np.array([0.01, 0.005])
 dumax = np.array([2, 200.])
 q = np.array([1000., 1000.])  # Output weights
-r = np.array([10., 0.0000001])  # Input weights
+r = np.array([100., 1])  # Input weights
 
 # Control loop simulation
 tsim = np.linspace(0, nsim * T, nsim + 1)  # Simulation Time vector
