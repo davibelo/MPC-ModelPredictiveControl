@@ -10,8 +10,8 @@ cycle_time = 60*SIMULATOR_SYNC_TIME  # Cycle time in seconds
 
 # MPC parameters
 T = 1  # Sampling time (min)
-ny = 2
-nu = 2
+ny = 2 # number of outputs
+nu = 2 # number of inputs
 n = 120  # Stabilizing horizon
 p = 120  # Output prediction horizon
 m = 5  # Control horizon
