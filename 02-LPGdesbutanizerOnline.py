@@ -1,4 +1,6 @@
 import time
+import numpy as np
+import joblib
 import subprocess
 from src.mpc import mpc_controller_scipy_minimize
 
@@ -23,6 +25,9 @@ OPC_SERVER = 'Matrikon.OPC.Simulation.1'
 HOST = 'localhost'
 tags_to_read = ['APD.C2LPG', 'APD.C5LPG', 'APD.TBOTTOMSP', 'APD.QREFLUXSP']
 
+#load the step responses
+Gmstep = joblib.load('outputs/Gstep.joblib')
+
 while True:
     start_time = time.time()  # Get the current time
     # Reading plant with OpenOPC CLI
@@ -46,7 +51,9 @@ while True:
     u0temp = np.array([TBOTTOMSP, QREFLUXSP], dtype=float)
     u_opt = mpc_controller_scipy_minimize(ny, nu, T, n, p, m, umax, umin, ymax, ymin, dumax, q, r,
                                           u0temp, y0temp, Gmstep)
-    TBOTTOMSP, QREFLUXSP = u_opt.reshape(-1, 1)
+    u_opt = u_opt.reshape(-1, 1)
+    TBOTTOMSP = u_opt[0].item()
+    QREFLUXSP = u_opt[1].item()
     print('writing tags...')
     print('TBOTTOMSP:', TBOTTOMSP)
     print('QREFLUXSP:', QREFLUXSP)
