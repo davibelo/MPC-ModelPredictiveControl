@@ -23,20 +23,22 @@ lines = output.split('\n')
 C2LPG, C5LPG, TBOTTOMSP, QREFLUXSP = float(lines[0]), float(lines[1]), float(lines[2]), float(lines[3])
 
 # Print the output
+print('reading tags...')
 print(f'C2LPG: {C2LPG}')
 print(f'C5LPG: {C5LPG}')
 print(f'TBOTTOMSP: {TBOTTOMSP}')
-print(f'QREFLUXSP: {QREFLUXSP}')
+print(f'QREFLUXSP: {QREFLUXSP}\n')
 
 # New values to write
-TBOTTOMSP = 120.
-QREFLUXSP = 670.
+TBOTTOMSP = 120.2
+QREFLUXSP = 670.2
 
-tags_to_write = ['APD.TBOTTOMSP', 'APD.QREFLUXSP']
-variables_to_write = [TBOTTOMSP, QREFLUXSP]
+print('writing tags...')
+print('TBOTTOMSP:', TBOTTOMSP)
+print('QREFLUXSP:', QREFLUXSP)
 
 # Arguments to write new values
-write_args = ['--write', 'APD.TBOTTOMSP', float(TBOTTOMSP), 'APD.QREFLUXSP', float(QREFLUXSP)]
+write_args = ['--write', 'APD.TBOTTOMSP', str(TBOTTOMSP), 'APD.QREFLUXSP', str(QREFLUXSP)]
 
 # Combine the command and arguments into a single list
 cmd = [command] + write_args
