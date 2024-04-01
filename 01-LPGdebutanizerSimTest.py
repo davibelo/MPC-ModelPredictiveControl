@@ -17,7 +17,7 @@ y0 = np.array([0.0139689, 0.0152698], dtype=float)
 #load the step responses
 Gmstep = joblib.load('outputs/Gstep.joblib')
 Gpstep = Gmstep
-plot_step_responses(Gmstep, nsim, T, plot_max_length=120, fig_name='LPGdebutanizer - Step Responses')
+plot_step_responses(Gmstep, nsim, T, plot_max_length=120, fig_name='01-LPGdebutanizer - Step Responses')
 
 # Set Simulation test
 tsimTest = np.linspace(0, nsimTest * T, nsimTest + 1)  # Simulation Time vector
@@ -31,7 +31,7 @@ Utest[:, 800:] = np.array([166., 10648.]).reshape(-1, 1).astype(float)  # Step c
 YsimTest, delta_U = simulateMIMO(Gmstep, tsimTest, ny, nu, y0, u0, Utest)
 
 # Call the function to plot simulation results
-plot_simulation_results(YsimTest, Utest, tsimTest, 'LPGdebutanizer - test')
+plot_simulation_results(YsimTest, Utest, tsimTest, '01-LPGdebutanizer - test')
 
 # MPC parameters
 n = 120  # Stabilizing horizon
@@ -68,4 +68,4 @@ for t in range(nsim + 1):
     print('u: ', u0temp)
     print('delta_U: ', delta_U[:, t])
     print(f'Step {t} of {nsim} completed')
-plot_simulation_results(Ysim, Usim, tsim, 'LPGdebutanizer - control loop', ymin, ymax, umin, umax)
+plot_simulation_results(Ysim, Usim, tsim, '01-LPGdebutanizer - control loop', ymin, ymax, umin, umax)
