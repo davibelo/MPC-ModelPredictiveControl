@@ -4,8 +4,11 @@ import joblib
 import subprocess
 from src.mpc import mpc_controller_scipy_minimize
 
+# Time parameters
+REAL_TIME_SYNC_FATOR = 0.5 # Real time sync factor on simulator
+cycle_time = 60*SIMULATOR_SYNC_TIME  # Cycle time in seconds
+
 # MPC parameters
-EXECUTION_TIME = 30 # Execution time in seconds
 T = 1  # Sampling time (min)
 ny = 2
 nu = 2
@@ -67,7 +70,7 @@ while True:
 
     # Calculate sleep time
     elapsed_time = end_time - start_time
-    time_to_wait = EXECUTION_TIME - elapsed_time
+    time_to_wait = cycle_time - elapsed_time
     print(f'Elapsed time: {elapsed_time} seconds')
     print(f'Waiting {time_to_wait} seconds...\n')
     time.sleep(time_to_wait)
