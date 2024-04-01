@@ -11,8 +11,8 @@ nsimTest = 2000  # Test simulation time in sampling periods
 s1 = System1()
 
 # Calculate step responses
-Gmstep = calculate_step_responses(s1.Gm, nsimTest, s1.T, 'step responses - test')
-Gpstep = calculate_step_responses(s1.Gm, nsim, s1.T, 'step responses - control loop simulation') # Gp = Gm for this example
+Gmstep = calculate_step_responses(s1.Gm, s1.n, s1.T, 'step responses - test')
+Gpstep = calculate_step_responses(s1.Gm, s1.n, s1.T, 'step responses - control loop simulation') # Gp = Gm for this example
 
 # Set Simulation test
 Utest, tsimTest = s1.generate_test_input(nsimTest)  # Generate test input

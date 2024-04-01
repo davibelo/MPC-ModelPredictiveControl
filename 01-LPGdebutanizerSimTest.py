@@ -17,7 +17,7 @@ y0 = np.array([0.0139689, 0.0152698], dtype=float)
 #load the step responses
 Gmstep = joblib.load('outputs/Gstep.joblib')
 Gpstep = Gmstep
-plot_step_responses(Gmstep, nsim, T, plot_max_length=120, fig_name='01-LPGdebutanizer - Step Responses')
+plot_step_responses(Gmstep, nsim, T, '01-LPGdebutanizer - Step Responses')
 
 # Set Simulation test
 tsimTest = np.linspace(0, nsimTest * T, nsimTest + 1)  # Simulation Time vector
@@ -60,7 +60,6 @@ for t in range(nsim + 1):
         Usim[:, t:] = u_opt.reshape(-1, 1)
         # Simulate
         Ysim, delta_U = simulateMIMO(Gpstep, tsim, ny, nu, y0, u0, Usim)
-
         # Update Y0 and U0 for the next step
         y0temp = Ysim[:, t]
         u0temp = Usim[:, t]
