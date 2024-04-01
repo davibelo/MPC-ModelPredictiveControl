@@ -5,8 +5,8 @@ import subprocess
 from src.mpc import mpc_controller_scipy_minimize
 
 # Time parameters
-REAL_TIME_SYNC_FATOR = 0.5 # Real time sync factor on simulator
-cycle_time = 60*SIMULATOR_SYNC_TIME  # Cycle time in seconds
+REAL_TIME_SYNC_FATOR = 0.1 # Real time sync factor on simulator
+cycle_time = 60*REAL_TIME_SYNC_FATOR  # Cycle time in seconds
 
 # MPC parameters
 T = 1  # Sampling time (min)
@@ -17,9 +17,11 @@ p = 120  # Output prediction horizon
 m = 5  # Control horizon
 umax = np.array([200., 20000.])
 umin = np.array([120., 1000.])
-ymax = np.array([0.015, 0.016])
-ymin = np.array([0.013, 0.015])
-dumax = np.array([1, 1000.])
+# ymax = np.array([0.015, 0.016])
+# ymin = np.array([0.013, 0.015])
+ymax = np.array([0.015, 0.010])
+ymin = np.array([0.013, 0.005])
+dumax = np.array([2, 2000.])
 q = np.array([1000., 1000.])  # Output weights
 r = np.array([100., 0.00001])  # Input weights
 
