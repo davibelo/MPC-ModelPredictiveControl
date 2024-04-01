@@ -24,7 +24,7 @@ plot_and_save(dataframe1=df,
               figsize=(10, 10),
               xticks_increment=25,
               y_num_bins=5,
-              fig_name='LPGdebutanizerStepTest',
+              fig_name='00-LPGdebutanizerStepTest',
               label1='step tests')
 
 # Get first step responses
@@ -47,7 +47,7 @@ plot_and_save(dataframe1=df_responses1,
               figsize=(8, 6),
               xticks_increment=5,
               y_num_bins=5,
-              fig_name='LPGdebutanizerUnitSteps',
+              fig_name='00-LPGdebutanizerUnitSteps',
               label1='unit step 1',
               label2='unit step 2')
 

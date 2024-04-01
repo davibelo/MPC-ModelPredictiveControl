@@ -1,5 +1,4 @@
 import numpy as np
-import control as ct
 from src.mpc import calculate_step_responses, simulateMIMO
 from src.mpc import plot_step_responses, plot_simulation_results
 from src.mpc import mpc_controller_scipy_minimize
