@@ -21,7 +21,9 @@ umin = np.array([120., 1000.])
 # ymin = np.array([0.013, 0.015]) # run initials
 ymax = np.array([0.015, 0.010]) # run 1
 ymin = np.array([0.013, 0.009]) # run 1
-dumax = np.array([0.5, 500.])
+# ymax = np.array([0.018, 1]) # run 2
+# ymin = np.array([0.016, 0.000]) # run 2
+dumax = np.array([1, 1000.])
 q = np.array([1000., 1000.])  # Output weights
 r = np.array([100., 0.00001])  # Input weights
 
@@ -48,8 +50,10 @@ print('Initializing SPs with PV values...')
 print(f'TBOTTOMPV: {TBOTTOMPV}')
 print(f'QREFLUXPV: {QREFLUXPV}\n')
 
-TBOTTOMSP = TBOTTOMPV
-QREFLUXSP = QREFLUXPV
+# TBOTTOMSP = TBOTTOMPV
+# QREFLUXSP = QREFLUXPV
+TBOTTOMSP = 166 # initial SP on saved snapshot
+QREFLUXSP = 10648 # initial SP on saved snapshot
 
 # Writing to plant with OpenOPC CLI
 write_args = ['--write', 'APD.TBOTTOMSP', str(TBOTTOMSP), 'APD.QREFLUXSP', str(QREFLUXSP)]
