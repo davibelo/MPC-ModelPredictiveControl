@@ -34,13 +34,13 @@ def calculate_step_responses(Gm, nsim, T, fig_name, plot_max_lenght=500):
     return Gstep
 
 def plot_step_responses(Gstep, nsim, T, fig_name):
-    tstep = np.linspace(0, nsim * T, nsim + 1)
     nrows = len(Gstep)
     ncols = len(Gstep[0])
     fig, axs = plt.subplots(nrows, ncols, figsize=(15, 15))
     fig.suptitle('step_responses')
     for j, row in enumerate(Gstep):
         for i, y_out in enumerate(row):
+            tstep = np.linspace(0, (len(y_out) - 1) * T, len(y_out))
             axs[j, i].plot(tstep, y_out)
             axs[j, i].set_title(f'Gstep[{j+1}][{i+1}]')
             axs[j, i].grid(True)
