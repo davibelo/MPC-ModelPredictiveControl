@@ -2,7 +2,7 @@
 name = "mpc"
 version = "0.1.0"
 description = "Model Predictive Control experiments"
-requires-python = ">=3.11,<3.13"
+requires-python = "==3.11.*"
 
 dependencies = [
   "numpy>=1.26",
